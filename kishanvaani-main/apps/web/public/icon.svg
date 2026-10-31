@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#065f46" />
+      <stop offset="100%" stop-color="#022c22" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
+  <!-- Wheat Stalk Graphic -->
+  <g fill="#fde047" stroke="#ca8a04" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Center Stem -->
+    <path d="M256 420 L256 120" stroke="#fef08a" stroke-width="12" />
+    <!-- Wheat Grains -->
+    <ellipse cx="230" cy="180" rx="30" ry="20" transform="rotate(-30 230 180)" fill="#fef08a" />
+    <ellipse cx="282" cy="180" rx="30" ry="20" transform="rotate(30 282 180)" fill="#fef08a" />
+    <ellipse cx="225" cy="230" rx="32" ry="22" transform="rotate(-30 225 230)" fill="#fef08a" />
+    <ellipse cx="287" cy="230" rx="32" ry="22" transform="rotate(30 287 230)" fill="#fef08a" />
+    <ellipse cx="220" cy="285" rx="34" ry="24" transform="rotate(-30 220 285)" fill="#fef08a" />
+    <ellipse cx="292" cy="285" rx="34" ry="24" transform="rotate(30 292 285)" fill="#fef08a" />
+    <ellipse cx="220" cy="340" rx="34" ry="24" transform="rotate(-30 220 340)" fill="#fef08a" />
+    <ellipse cx="292" cy="340" rx="34" ry="24" transform="rotate(30 292 340)" fill="#fef08a" />
+    <!-- Top Spire -->
+    <ellipse cx="256" cy="130" rx="20" ry="35" fill="#fef08a" />
+    <!-- Awns / Bristles -->
+    <path d="M256 100 L256 60" stroke="#fef08a" stroke-width="8" />
+    <path d="M240 110 L210 70" stroke="#fef08a" stroke-width="6" />
+    <path d="M272 110 L302 70" stroke="#fef08a" stroke-width="6" />
+  </g>
+  <!-- Soundwave Arc (Audio-First) -->
+  <g fill="none" stroke="#6ee7b7" stroke-width="14" stroke-linecap="round">
+    <path d="M360 210 A 100 100 0 0 1 360 310" opacity="0.9" />
+    <path d="M390 180 A 140 140 0 0 1 390 340" opacity="0.7" />
+  </g>
+</svg>

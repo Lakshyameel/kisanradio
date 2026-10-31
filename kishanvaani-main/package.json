@@ -1,0 +1,24 @@
+{
+  "name": "kishanvaani",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev:server": "npm run --prefix apps/server dev",
+    "dev:web": "npm run --prefix apps/web dev",
+    "build:server": "npm run --prefix apps/server build",
+    "build:web": "npm run --prefix apps/web build",
+    "build": "npm run build:server && npm run build:web",
+    "seed": "npm run --prefix apps/server build && node apps/server/dist/seed.js",
+    "test:server": "npm run --prefix apps/server test",
+    "test": "npm run test:server",
+    "db:generate": "npx --prefix apps/server prisma generate",
+    "db:push": "npx --prefix apps/server prisma db push",
+    "check:mandi": "npm run --prefix apps/server check:mandi"
+  },
+  "devDependencies": {
+    "prisma": "^6.19.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3"
+  }
+}

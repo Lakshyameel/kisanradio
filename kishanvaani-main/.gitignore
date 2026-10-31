@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.vite/
+coverage/
+.DS_Store
+*.db
+*.db-journal
+uploads/
+**/uploads/

@@ -1,0 +1,297 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String?
+  googleId    String?  @unique
+  name        String
+  avatarUrl   String?
+  role        String   @default("USER") // USER, EXPERT, ADMIN
+  phone       String?
+  state       String?  @default("Punjab")
+  district    String?  @default("Ludhiana")
+  language    String   @default("Hindi")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  bookmarks   Bookmark[]
+  history     ListeningHistory[]
+  questions   ExpertQuestion[]
+  stories     CommunityStory[]
+  contentLikes ContentLike[]
+  storyLikes   StoryLike[]
+  contents     Content[]
+  notifications Notification[]
+  auditLogs    AuditLog[]
+}
+
+model Content {
+  id           String        @id @default(cuid())
+  title        String
+  slug         String        @unique
+  description  String?
+  body         String?
+  type         String        // NEWS, CROP_ADVISORY, LIVESTOCK, GOVERNMENT_SCHEME, SUCCESS_STORY, FAILURE_STORY, FARMER_EXPERIENCE, STORY, POEM, FOLK_TALE, AUDIO_BOOK
+  category     String        // Agriculture, Community, Literature, Schemes
+  status       String        @default("PUBLISHED") // DRAFT, PENDING_REVIEW, PUBLISHED, SCHEDULED, ARCHIVED
+  language     String        @default("Hindi")
+  thumbnailUrl String?
+  authorName   String?
+  tags         String?
+  viewsCount   Int           @default(0)
+  likesCount   Int           @default(0)
+  scheduledPublishAt DateTime?
+  publishedAt  DateTime?     @default(now())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  audio        Audio?
+  bookmarks    Bookmark[]
+  likes        ContentLike[]
+  authorId     String?
+  author       User?         @relation(fields: [authorId], references: [id], onDelete: SetNull)
+}
+
+model Audio {
+  id          String   @id @default(cuid())
+  contentId   String   @unique
+  fileUrl     String
+  durationSec Int?     @default(120)
+  narrator    String?
+  transcript  String?
+  createdAt   DateTime @default(now())
+
+  content     Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  history     ListeningHistory[]
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  contentId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, contentId])
+}
+
+model ListeningHistory {
+  id              String   @id @default(cuid())
+  userId          String
+  audioId         String
+  progressSeconds Int      @default(0)
+  completed       Boolean  @default(false)
+  lastPlayedAt    DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  audio Audio @relation(fields: [audioId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, audioId])
+}
+
+model CommunityStory {
+  id          String   @id @default(cuid())
+  userId      String
+  title       String
+  body        String
+  category    String   @default("SUCCESS_STORY") // SUCCESS_STORY, FAILURE_STORY, FARMER_EXPERIENCE
+  audioUrl    String?
+  status      String   @default("PUBLISHED")     // PENDING_REVIEW, PUBLISHED, REJECTED
+  likesCount  Int      @default(0)
+  farmerName  String?
+  location    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes StoryLike[]
+}
+
+model ExpertQuestion {
+  id             String   @id @default(cuid())
+  userId         String
+  question       String
+  crop           String?
+  category       String?
+  answer         String?
+  answeredBy     String?
+  audioAnswerUrl String?
+  status         String   @default("ANSWERED") // PENDING, ANSWERED
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model MandiPrice {
+  id          String   @id @default(cuid())
+  state       String
+  district    String
+  market      String
+  commodity   String
+  variety     String?  @default("Common")
+  minPrice    Float?
+  maxPrice    Float?
+  modalPrice  Float?
+  arrivals    Float?   // Arrival quantity in Quintals
+  source      String   @default("AGMARKNET") // AGMARKNET, ENAM, LOCAL
+  tradeStatus String?  @default("AUCTION_SETTLED") // AUCTION_SETTLED, ACTIVE_BIDDING, TRADING_COMPLETED
+  priceDate   DateTime @default(now())
+  trend       String?  @default("STABLE") // UP, DOWN, STABLE
+  createdAt   DateTime @default(now())
+
+  @@index([state, district, market, commodity, source])
+}
+
+model WeatherCache {
+  id               String   @id @default(cuid())
+  locationKey      String   @unique
+  district         String
+  state            String
+  temperature      Float
+  condition        String
+  humidity         Int
+  windSpeed        Float
+  rainfallForecast String
+  advisory         String
+  fetchedAt        DateTime @default(now())
+}
+
+model ContentLike {
+  id        String   @id @default(cuid())
+  userId    String
+  contentId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, contentId])
+}
+
+model StoryLike {
+  id        String   @id @default(cuid())
+  userId    String
+  storyId   String
+  createdAt DateTime @default(now())
+
+  user  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  story CommunityStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, storyId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  type      String   @default("QUESTION_ANSWERED") // QUESTION_ANSWERED, SPRAY_ALERT, PRICE_ALERT, SYSTEM
+  linkUrl   String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String
+  userName   String?
+  action     String   // APPROVE_STORY, REJECT_STORY, SCHEDULE_CONTENT, PUBLISH_CONTENT, BULK_UPLOAD, ANSWER_QUESTION
+  targetType String   // CONTENT, STORY, EXPERT_QUESTION, MANDI_PRICE
+  targetId   String?
+  details    String?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([action, targetType, createdAt])
+}
+
+model NewsArticleCache {
+  id                    String   @id @default(cuid())
+  guid                  String   @unique
+  title                 String
+  slug                  String   @unique
+  source                String   // MINISTRY, KVK, PIB, ICAR
+  sourceName            String
+  category              String   @default("SCHEMES") // SCHEMES, CROP_SCIENCE, PEST_ALERT, SUBSIDY_MSP, TECHNOLOGY, ORGANIC_NATURAL
+  categoryLabel         String   @default("Agricultural Bulletin")
+  summary               String
+  fullBody              String
+  publishedAt           DateTime @default(now())
+  readTimeMin           Int      @default(3)
+  audioDurationSec      Int      @default(120)
+  audioUrl              String?  @default("")
+  narrator              String   @default("KishanVaani News Desk")
+  language              String   @default("English")
+  state                 String?  @default("All India")
+  district              String?
+  officialReferenceUrl  String?
+  isUrgent              Boolean  @default(false)
+  isSample              Boolean  @default(false)
+  tags                  String?
+  fetchedAt             DateTime @default(now())
+
+  @@index([source, category, publishedAt])
+}
+
+model NewsSource {
+  id            String        @id @default(cuid())
+  name          String
+  url           String        @unique
+  language      String        @default("hi")
+  enabled       Boolean       @default(true)
+  lastFetchedAt DateTime?
+  lastStatus    String?
+
+  articles      NewsArticle[]
+  checked       NewsChecked[]
+}
+
+model NewsArticle {
+  id          String      @id @default(cuid())
+  sourceId    String
+  externalId  String      // PRID
+  title       String
+  link        String
+  ministry    String?
+  matchedBy   String      // "MINISTRY" | "KEYWORD"
+  publishedAt DateTime    @default(now())
+  createdAt   DateTime    @default(now())
+
+  source      NewsSource  @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceId, externalId])
+  @@index([publishedAt])
+}
+
+model NewsChecked {
+  id         String      @id @default(cuid())
+  sourceId   String
+  externalId String      // PRID
+  checkedAt  DateTime    @default(now())
+  result     String      // "SAVED" | "SKIPPED" | "UNREADABLE"
+  attempts   Int         @default(1)
+
+  source     NewsSource  @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceId, externalId])
+  @@index([checkedAt])
+}
+
+
+
+

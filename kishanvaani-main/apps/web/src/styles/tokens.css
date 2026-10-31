@@ -1,0 +1,123 @@
+:root {
+  /* ========================================
+     KISHANVAANI COLOR SYSTEM
+     ======================================== */
+
+  --kv-primary-900: #18251a;
+  --kv-primary-800: #213523;
+  --kv-primary-700: #2b482f;
+  --kv-primary-600: #365b3b;
+  --kv-primary-500: #4b704e;
+
+  --kv-primary-100: #e7eee4;
+  --kv-primary-50: #f3f7f0;
+
+  --kv-background: #f7f8f4;
+  --kv-surface: #ffffff;
+  --kv-surface-muted: #f0f2ed;
+
+  --kv-text-primary: #18201a;
+  --kv-text-secondary: #59635a;
+  --kv-text-muted: #7a837b;
+
+  --kv-border: #dfe4dc;
+  --kv-border-light: #eaede8;
+
+  --kv-success: #3f7047;
+  --kv-warning: #a06b19;
+  --kv-error: #a64242;
+  --kv-info: #416d91;
+
+
+  /* ========================================
+     TYPOGRAPHY
+     ======================================== */
+
+  --kv-font-sans:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  --kv-text-xs: 0.75rem;
+  --kv-text-sm: 0.875rem;
+  --kv-text-md: 1rem;
+  --kv-text-lg: 1.125rem;
+  --kv-text-xl: 1.375rem;
+  --kv-text-2xl: 1.75rem;
+  --kv-text-3xl: 2.25rem;
+  --kv-text-4xl: 3rem;
+  --kv-text-5xl: 4rem;
+
+  --kv-weight-regular: 400;
+  --kv-weight-medium: 500;
+  --kv-weight-semibold: 600;
+  --kv-weight-bold: 700;
+  --kv-weight-extrabold: 800;
+
+
+  /* ========================================
+     SPACING
+     ======================================== */
+
+  --kv-space-1: 0.25rem;
+  --kv-space-2: 0.5rem;
+  --kv-space-3: 0.75rem;
+  --kv-space-4: 1rem;
+  --kv-space-5: 1.25rem;
+  --kv-space-6: 1.5rem;
+  --kv-space-8: 2rem;
+  --kv-space-10: 2.5rem;
+  --kv-space-12: 3rem;
+  --kv-space-16: 4rem;
+  --kv-space-20: 5rem;
+
+
+  /* ========================================
+     BORDER RADIUS
+     ======================================== */
+
+  --kv-radius-sm: 0.5rem;
+  --kv-radius-md: 0.75rem;
+  --kv-radius-lg: 1rem;
+  --kv-radius-xl: 1.25rem;
+  --kv-radius-2xl: 1.5rem;
+  --kv-radius-full: 9999px;
+
+
+  /* ========================================
+     SHADOWS
+     ======================================== */
+
+  --kv-shadow-sm:
+    0 1px 3px rgba(24, 32, 26, 0.06);
+
+  --kv-shadow-md:
+    0 8px 24px rgba(24, 32, 26, 0.08);
+
+  --kv-shadow-lg:
+    0 16px 40px rgba(24, 32, 26, 0.12);
+
+
+  /* ========================================
+     LAYOUT
+     ======================================== */
+
+  --kv-container: 1180px;
+  --kv-content-width: 88%;
+
+  --kv-header-height: 72px;
+  --kv-audio-player-height: 76px;
+
+
+  /* ========================================
+     MOTION
+     ======================================== */
+
+  --kv-transition-fast: 150ms ease;
+  --kv-transition-normal: 220ms ease;
+  --kv-transition-slow: 350ms ease;
+}

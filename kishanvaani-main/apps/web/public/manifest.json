@@ -1,0 +1,20 @@
+{
+  "name": "KishanVaani - Audio-First Agriculture",
+  "short_name": "KishanVaani",
+  "description": "Audio-first agriculture platform delivering daily mandi prices, agro-weather forecasts, and farming advice for rural communities.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#064e3b",
+  "theme_color": "#065f46",
+  "categories": ["agriculture", "news", "weather", "education"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
