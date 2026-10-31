@@ -31,7 +31,7 @@ jobs:
 
       - name: Install dependencies and Build
         run: |
-          cd apps/web
+          cd kishanvaani-main/apps/web
           npm install
           npm run build
 
@@ -41,7 +41,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'apps/web/dist'
+          path: 'kishanvaani-main/apps/web/dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
